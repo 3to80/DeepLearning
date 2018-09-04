@@ -1,0 +1,37 @@
+Tensor("train/gradients/dnn/hidden1/MatMul_grad/tuple/control_dependency_1:0", shape=(784, 196), dtype=float32)  ####
+ <tf.Variable 'hidden1/kernel:0' shape=(784, 196) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/hidden1/BiasAdd_grad/tuple/control_dependency_1:0", shape=(196,), dtype=float32)
+####  <tf.Variable 'hidden1/bias:0' shape=(196,) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/batch_normalization/batchnorm/mul_grad/tuple/control_dependency_1:0", shape=(196,), dtype=float32)
+####  <tf.Variable 'batch_normalization/gamma:0' shape=(196,) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/batch_normalization/batchnorm/sub_grad/tuple/control_dependency:0", shape=(196,), dtype=float32)
+####  <tf.Variable 'batch_normalization/beta:0' shape=(196,) dtype=float32_ref>
+
+
+Tensor("train/gradients/dnn/hidden2/MatMul_grad/tuple/control_dependency_1:0", shape=(196, 196), dtype=float32)
+####  <tf.Variable 'hidden2/kernel:0' shape=(196, 196) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/hidden2/BiasAdd_grad/tuple/control_dependency_1:0", shape=(196,), dtype=float32)
+####  <tf.Variable 'hidden2/bias:0' shape=(196,) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/batch_normalization_1/batchnorm/mul_grad/tuple/control_dependency_1:0", shape=(196,), dtype=float32)
+####  <tf.Variable 'batch_normalization_1/gamma:0' shape=(196,) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/batch_normalization_1/batchnorm/sub_grad/tuple/control_dependency:0", shape=(196,), dtype=float32)
+ ####  <tf.Variable 'batch_normalization_1/beta:0' shape=(196,) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/outputs/MatMul_grad/tuple/control_dependency_1:0", shape=(196, 10), dtype=float32)
+####  <tf.Variable 'outputs/kernel:0' shape=(196, 10) dtype=float32_ref>
+
+
+Tensor("train/gradients/dnn/outputs/BiasAdd_grad/tuple/control_dependency_1:0", shape=(10,), dtype=float32)
+ ####  <tf.Variable 'outputs/bias:0' shape=(10,) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/batch_normalization_2/batchnorm/mul_grad/tuple/control_dependency_1:0", shape=(10,), dtype=float32)
+ ####  <tf.Variable 'batch_normalization_2/gamma:0' shape=(10,) dtype=float32_ref>
+
+Tensor("train/gradients/dnn/batch_normalization_2/batchnorm/sub_grad/tuple/control_dependency:0", shape=(10,), dtype=float32)
+  ####  <tf.Variable 'batch_normalization_2/beta:0' shape=(10,) dtype=float32_ref>
