@@ -79,8 +79,8 @@ print("######## 최상위 층만 학습 다시 시킨 경우 ########")
 #
 learning_rate = 0.01
 
-for name in tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES):
-    print(name)
+# for name in tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES):
+#     print(name)
 
 # soft max 입력층 선택
 output_layer_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope="logits")
@@ -129,8 +129,14 @@ with tf.Session() as sess:
             if checks_without_progress > max_checks_without_progress:
                 print("조기 종료!")
                 break
-        print("{}\t검증 세트 손실: {:.6f}\t최선의 손실: {:.6f}\t정확도: {:.2f}%".format(
+
+        if not epoch % 5:
+            print("{}\t검증 세트 손실: {:.6f}\t최선의 손실: {:.6f}\t정확도: {:.2f}%".format(
             epoch, loss_val, best_loss, acc_val * 100))
+
+    acc_test,loss_test = sess.run([accuracy, loss], feed_dict={X: X_test2, y: y_test2})
+    # acc_test = accuracy.eval(feed_dict={X: X_test2, y: y_test2})
+    print("최종 테스트 정확도: {:.4f}% 최종 손실 값 : {:.4f}".format(acc_test * 100, loss_test))
 
 
 
@@ -184,12 +190,6 @@ with tf.Session() as sess:
         for var in retrain:
             var.initializer.run();
 
-    t0 = time.time()
-
-
-
-
-
     for epoch in range(n_epochs):
         rnd_idx = np.random.permutation(len(X_train2))
         for rnd_indices in np.array_split(rnd_idx, len(X_train2) // batch_size):
@@ -197,6 +197,7 @@ with tf.Session() as sess:
             sess.run(training_op3, feed_dict={X: X_batch, y: y_batch})
 
         loss_val, acc_val = sess.run([loss, accuracy], feed_dict={X: X_valid2, y: y_valid2})
+
         if loss_val < best_loss:
             best_loss = loss_val
             checks_without_progress = 0
@@ -205,53 +206,11 @@ with tf.Session() as sess:
             if checks_without_progress > max_checks_without_progress:
                 print("조기 종료!")
                 break
-        print("{}\t검증 세트 손실: {:.6f}\t최선의 손실: {:.6f}\t정확도: {:.2f}%".format(
+
+        if not epoch %5 :
+            print("{}\t검증 세트 손실: {:.6f}\t최선의 손실: {:.6f}\t정확도: {:.2f}%".format(
             epoch, loss_val, best_loss, acc_val * 100))
 
-
-###### 동결 층 캐싱 ########
-
-
-
-
-
-
-n_epochs = 1000
-batch_size = 20
-
-max_checks_without_progress = 20
-checks_without_progress = 0
-best_loss = np.infty
-import time
-
-with tf.Session() as sess:
-    init.run()
-    restore_saver.restore(sess, "/home/jeunghwankim/DeepLearning/DeepLearning/Exercise/Hands_on_ml/11_deep_learning_exercise/problem_8/hptuning_trainier/best_hyper_parameter_model/model")
-
-
-    # 학습을 다시할 곳만 initializing
-
-    for retrain in re_training_li:
-        for var in retrain:
-            var.initializer.run();
-
-    t0 = time.time()
-
-    for epoch in range(n_epochs):
-        rnd_idx = np.random.permutation(len(X_train2))
-        for rnd_indices in np.array_split(rnd_idx, len(X_train2) // batch_size):
-            X_batch, y_batch = X_train2[rnd_indices], y_train2[rnd_indices]
-            sess.run(training_op3, feed_dict={X: X_batch, y: y_batch})
-
-        loss_val, acc_val = sess.run([loss, accuracy], feed_dict={X: X_valid2, y: y_valid2})
-        if loss_val < best_loss:
-            best_loss = loss_val
-            checks_without_progress = 0
-        else:
-            checks_without_progress += 1
-            if checks_without_progress > max_checks_without_progress:
-                print("조기 종료!")
-                break
-        print("{}\t검증 세트 손실: {:.6f}\t최선의 손실: {:.6f}\t정확도: {:.2f}%".format(
-            epoch, loss_val, best_loss, acc_val * 100))
-
+    acc_test,loss_test = sess.run([accuracy, loss], feed_dict={X: X_test2, y: y_test2})
+    # acc_test = accuracy.eval(feed_dict={X: X_test2, y: y_test2})
+    print("최종 테스트 정확도: {:.4f}% 최종 손실 값 : {:.4f}".format(acc_test * 100, loss_test))
